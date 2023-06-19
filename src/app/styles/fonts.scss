@@ -3,3 +3,15 @@
         font-size: $i + px;
     }
 }
+
+$presentage-list: 25 50 75 100;
+
+@each $value in $presentage-list {
+    .w-#{$value} {
+        width: percentage(100/$value) !important;
+    }
+
+    .h-#{$value} {
+        height: percentage(100/$value) !important;
+    }
+}

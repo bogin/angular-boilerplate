@@ -1,0 +1,10 @@
+@import '../../styles/params.scss';
+
+.mines-page-container {
+  background-color: aqua;
+}
+
+app-mines-page {
+    width: 100%;
+    height: calc(100% - $topBaHeight);;
+}
