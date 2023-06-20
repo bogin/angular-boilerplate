@@ -1,0 +1,12 @@
+
+<ng-container *ngIf="board">
+    <div class="d-flex justify-content-center flex-column align-items-center">
+        <ng-container *ngFor="let row of cells">
+            <div class="d-flex justify-content-center align-items-center">
+                <ng-container *ngFor="let cell of row">
+                    <app-mines-cell (notify)="notificationRecived($event)" [cell]="cell"></app-mines-cell>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>
