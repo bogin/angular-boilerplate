@@ -1,25 +1,22 @@
 @import '../app/styles/params.scss';
 
 .toolbar {
-  position: absolute;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  height: $topBaHeight;
+  width: 100%;
+  background-color: #3f51b5;
+  color: #fff;
   display: flex;
+  padding: 0 16px;
   align-items: center;
-  background-color: #1976d2;
-  color: white;
-  font-weight: 600;
+  height: 56px;
+  font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
 }
 
 .base-container {
-  // display: flex;
-  align-items: center;
-  justify-content: center;
   color: white;
-  position: absolute;
+  position: fixed;
   height: calc(100% - $topBaHeight);
-  top: $topBaHeight;
+  top: 35px;
   left: 0;
 }
