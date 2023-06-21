@@ -28,6 +28,7 @@ import { MinesCellComponent } from './components/mines-cell/mines-cell.component
 //services
 import { UserActionsService as UserActionService } from './components/user-action/user-action.serivce';
 import { BoardComponent } from './components/board/board.component';
+import { FormComponent } from './components/form/form.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { BoardComponent } from './components/board/board.component';
     MinesPageComponent,
     MinesBoardComponent,
     MinesCellComponent,
-    BoardComponent
+    BoardComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,

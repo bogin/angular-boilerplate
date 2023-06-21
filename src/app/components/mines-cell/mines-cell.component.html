@@ -1,23 +1,32 @@
-<div class="cell-contanier d-flex justify-content-center align-items-center" 
-    (click)="notify.emit({ type: NotificationType.ItemClicked, data: this.cell})"
-    (contextmenu)="rightClick($event)">
+<div class="cell-contanier d-flex justify-content-center align-items-center"
+    (click)="click(cell, NotificationType.ItemClicked)" 
+    (contextmenu)="click(cell, NotificationType.ItemRightClicked)"
+    [ngClass]="{
+        'empty-discovered-cell': cell.state === CellState.Discovered && cell.type === CellType.Empty 
+    }">
     <ng-container [ngSwitch]="cell.state">
-        
+
         <ng-container *ngSwitchCase="CellState.UnDiscovered"></ng-container>
-       
+
         <ng-container *ngSwitchCase="CellState.Marked">
             <i class="fa-solid fa-triangle-exclamation color-black f-s-18"></i>
         </ng-container>
-       
-        <ng-container *ngSwitchCase="CellState.Discovered">
-            <ng-container *ngIf="cell.value">
-                {{cell.value}}
-            </ng-container>
 
-            <ng-container *ngIf="cell.type === CellType.Bomb">
-                <i class="fa-solid fa-bomb f-s-18"></i>
+        <ng-container *ngSwitchCase="CellState.Discovered">
+            <ng-container [ngSwitch]="cell.type">
+                <ng-container *ngSwitchCase="CellType.Empty">
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="CellType.Bomb">
+                    <i class="fa-solid fa-bomb f-s-18"></i>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="CellType.Number">
+                    {{cell.value}}
+                </ng-container>
             </ng-container>
         </ng-container>
-    
+
     </ng-container>
 </div>

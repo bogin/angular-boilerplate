@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CellType } from 'src/app/models/enums/board-cell-type.enum';
 import { CellState } from 'src/app/models/enums/board-state-type.enum';
 import { NotificationType } from 'src/app/models/enums/notification-type.enum';
@@ -10,7 +10,7 @@ import { Notification } from 'src/app/models/interfaces/notification.model';
   templateUrl: './mines-cell.component.html',
   styleUrls: ['./mines-cell.component.scss']
 })
-export class MinesCellComponent implements OnChanges {
+export class MinesCellComponent {
   readonly NotificationType = NotificationType;
   readonly CellState = CellState;
   readonly CellType = CellType;
@@ -18,12 +18,11 @@ export class MinesCellComponent implements OnChanges {
   @Input() cell: BoardCell;
   @Output() notify = new EventEmitter<Notification>();
 
-  ngOnChanges() {
-
-  }
-
-  rightClick = ($event: any): boolean => {
-    this.notify.emit({ type: NotificationType.ItemClicked, data: this.cell });
+  click = (cell: BoardCell, notificationType: NotificationType): boolean => {
+    if (cell.state !== CellState.Discovered) {
+      this.notify.emit({ type: notificationType, data: this.cell });
+    }
+    
     return false;
   }
 

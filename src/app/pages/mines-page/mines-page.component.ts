@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { validInteger } from '../../form-validaors/integer.validator'
 import { Board } from 'src/app/models/interfaces/board.model';
 import { Notification } from 'src/app/models/interfaces/notification.model';
 import { NotificationType } from 'src/app/models/enums/notification-type.enum';
+import { BoardCell } from 'src/app/models/interfaces/board-cell.model';
+import { CellState } from 'src/app/models/enums/board-state-type.enum';
+import { cloneDeep } from 'lodash';
+import { MinesPageService } from './mines-page.serivce';
+import { MinesPage } from 'src/app/models/interfaces/mines-page-configurations.model';
 
 @Component({
   selector: 'app-mines-page',
@@ -11,50 +14,44 @@ import { NotificationType } from 'src/app/models/enums/notification-type.enum';
   styleUrls: ['./mines-page.component.scss']
 })
 export class MinesPageComponent {
-  boardForm: FormGroup;
-  showBoard: boolean;
-  board: Board;
-  constructor(private formBuilder: FormBuilder) { }
+  board?: Board;
+  gameEnded?: boolean;
+  configurations: MinesPage;
+  constructor(private minesPageService: MinesPageService) {}
 
   ngOnInit() {
-    this.boardForm = this.formBuilder.group({
-      boardSize: ['', [Validators.required, Validators.min(1), validInteger()]],
-      totalBombs: ['', [Validators.required, Validators.min(1), validInteger()]]
-    });
-
-    this.showBoard = true;
-    this.board = {
-      size: 10,
-      total_bombs: 30
-    }
+    this.initPage();
   }
 
-  onSubmit() {
-    if (this.boardForm?.valid) {
-      this.initBoard();
-    }
+  initPage = () => {
+    this.gameEnded = false;
+    this.configurations = this.minesPageService.getConfiguraions();
+    this.board = undefined;
+    this.board = cloneDeep(this.configurations.board);
   }
 
-  private initBoard = () => {
-    this.showBoard = false;
-    this.board = {
-      size: this.boardForm.value.boardSize,
-      total_bombs: this.boardForm.value.totalBombs
-    };
-    this.showBoard = true;
-  }
-
-  notificationRecived = (notificatin: Notification) => {
-    switch (notificatin.type) {
+  notificationRecived = (notification: Notification) => {
+    switch (notification.type) {
       case NotificationType.Done: {
-        this.finishGame(notificatin.data.board.lose);
+        this.finishGame(!!this.board?.lose);
+        break;
+      }
+      case NotificationType.ItemRightClicked: {
+        this.updateMarkerCounter(notification.data);
         break;
       }
     }
   }
 
+  private updateMarkerCounter = (cell: BoardCell): void => {
+    if (cell.state === CellState.Marked) {
+      this.board!.markers++; 
+    } else {
+      this.board!.markers--; 
+    }
+  }
+
   private finishGame = (lose: boolean) => {
-    lose ? alert('you lose') : alert('you win');
-    this.initBoard();
+    this.gameEnded = true;
   }
 }

@@ -4,4 +4,8 @@
     border: 1px solid black;
     margin: 3px;
     color: black;
+
+    &.empty-discovered-cell {
+        background-color: rgb(241, 226, 205);
+    }
 }

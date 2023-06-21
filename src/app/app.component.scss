@@ -9,7 +9,7 @@
   display: flex;
   padding: 0 16px;
   align-items: center;
-  height: 56px;
+  height: $topBaHeight;
   font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
 }
 
@@ -17,6 +17,6 @@
   color: white;
   position: fixed;
   height: calc(100% - $topBaHeight);
-  top: 35px;
+  top: $topBaHeight;
   left: 0;
 }

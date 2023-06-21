@@ -1,48 +1,23 @@
 <div class="mines-page-container d-flex flex-column w-100 h-100">
-    <div class="h-25">
-
-        <!-- TODO MOVE FORM TO COMPONENT -->
-        <h2>Insert nomber of boardSize</h2>
-        <form [formGroup]="boardForm" (ngSubmit)="onSubmit()">
-
-            <!-- TODO: ng-contanier for form input of type number -->
-            <div>
-                <label for="boardSize">Number of rows & columns:</label>
-                <input type="number" id="boardSize" formControlName="boardSize" />
-                <ng-container *ngIf="boardForm?.controls as controls">
-                    <div *ngIf="controls['boardSize']?.invalid && controls['boardSize']?.touched">
-                        <small *ngIf="controls['boardSize']?.errors?.required">Number of rows & columns is
-                            required.</small>
-                        <small *ngIf="controls.boardSize.errors?.notValidInteger">Number of rows & columns must be a
-                            number.</small>
-                        <small *ngIf="controls.boardSize.errors?.min">Number of rows & columns must be at least
-                            1.</small>
-                    </div>
-                </ng-container>
-            </div>
-
-            <div>
-                <label for="totalBombs">Number of bombs:</label>
-                <input type="number" id="totalBombs" formControlName="totalBombs" />
-                <ng-container *ngIf="boardForm?.controls as controls">
-                    <div *ngIf="controls['totalBombs']?.invalid && controls['totalBombs']?.touched">
-                        <small *ngIf="controls['totalBombs']?.errors?.required">Number of bombs is
-                            required.</small>
-                        <small *ngIf="controls.totalBombs.errors?.notValidInteger">Number of bombs must be a
-                            number.</small>
-                        <small *ngIf="controls.totalBombs.errors?.min">Number of bombs must be at least
-                            1.</small>
-                    </div>
-                </ng-container>
-            </div>
-
-            <button type="submit" [disabled]="boardForm.invalid">Submit</button>
-        </form>
+    <div class="w-100 d-flex justify-content-center align-items-end color-black">
+        <div class="title-container">
+            <span class="f-s-35"> {{ configurations.title.key }} </span>
+            <span class="grow"></span>
+            <span class="f-s-15"> {{ board?.markers || 0 }} / {{ board?.total_bombs || 0 }}</span>
+        </div>
     </div>
     
-    <ng-container *ngIf="!!showBoard">
-        <div class="d-flex h-75 justify-content-center align-items-center">
-            <app-board [board]="board" (notify)="notificationRecived($event)" ></app-board>
+    <div class="d-flex h-100 justify-content-center align-items-center">
+       <ng-container *ngIf="gameEnded; else Board">
+        <div class="d-flex flex-column align-items-center" (click)="initPage()">
+            <span class="f-s-50 color-black"> {{ (!!board?.lose ? 'you lose' : ' you won') | uppercase }}</span>
+            <br>
+            <span class="f-s-20 color-black"> {{ 'click here to start a new game' | uppercase }} </span>
         </div>
-    </ng-container>
+       </ng-container>
+        
+       <ng-template #Board>
+        <app-board [board]="board" (notify)="notificationRecived($event)"></app-board>
+       </ng-template>
+    </div>
 </div>
