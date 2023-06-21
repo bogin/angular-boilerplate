@@ -1,10 +1,14 @@
 @import '../../styles/params.scss';
 
-.title-container {
-  width: 19%;
+app-board {
+  position: absolute;
+
+  &.game-ended {
+    filter: blur(2px);
+  }
 }
 
-app-mines-page {
-    width: 100%;
-    height: calc(100% - $topBaHeight);;
+.end-game-cover {
+  position: relative;
+  z-index: 10;
 }

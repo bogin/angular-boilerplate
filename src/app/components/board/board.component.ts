@@ -31,6 +31,10 @@ export class BoardComponent implements OnChanges {
   }
 
   notificationRecived = (notification: Notification) => {
+    if (!this.board?.active || !!this.board?.lose) {
+      return;
+    }
+
     switch (notification.type) {
       case NotificationType.ItemClicked: {
         this.cellClicked(notification.data);
@@ -42,21 +46,23 @@ export class BoardComponent implements OnChanges {
         break;
       }
     }
-    setTimeout(() => {
+
+    if (this.board?.active && !this.board?.lose) {
       this.ifPlayerWonEndGame();
-    });
+    }
   }
 
   private moveBombFromCell = (cell: BoardCell): void => {
     this.initBoardCells(cell);
-    this.cellClicked(cell);
+    this.cellClicked(this.cells[cell.row][cell.column]);
   }
 
   private cellClicked = (cell: BoardCell): void => {
+    const isFirstClick = !!this.board?.firstClick;
+    this.board!.firstClick = false;
     switch (cell.type) {
       case CellType.Bomb: {
-        if (!!this.board?.firstClick) {
-          this.board.firstClick = false;
+        if (isFirstClick) {
           this.moveBombFromCell(cell);
         } else {
           this.playerFailed(cell)
@@ -86,7 +92,7 @@ export class BoardComponent implements OnChanges {
 
     this.board!.lose = false;
     setTimeout(() => {
-      this.notify.emit({ type: NotificationType.Done, data: { board: this.board } })
+      this.finishGame();
     });
   }
 
@@ -94,10 +100,13 @@ export class BoardComponent implements OnChanges {
     if (!!this.board) {
       this.showCellValue(cell);
       this.board.lose = true;
-      setTimeout(() => {
-        this.notify.emit({ type: NotificationType.Done })
-      }, 10);
+      this.finishGame(cell);
     }
+  }
+
+  private finishGame = (cell?: BoardCell): void => {
+    this.notify.emit({ type: NotificationType.Done });
+    this.showFailedBoard(cell);
   }
 
   private toggleCellMarker = (cell: BoardCell): void => {
@@ -114,6 +123,9 @@ export class BoardComponent implements OnChanges {
 
   private showEmptyCells = (cell: BoardCell): void => {
     if (cell.type !== CellType.Empty || cell.state === CellState.Discovered) {
+      if (cell.type === CellType.Number) {
+        cell.state = CellState.Discovered;
+      }
       return;
     }
     cell.state = CellState.Discovered;
@@ -127,21 +139,21 @@ export class BoardComponent implements OnChanges {
     }
   }
 
-  private initEmptyCells = () => {
-    this.cells = [...Array(this.board?.size)]
+  private initEmptyCells = (): void => {
+    this.cells = [...Array(this.board?.rows)]
       .map((item: any, row: number) => this.initEmptyBoardRow(row));
   }
 
   private initEmptyBoardRow = (row: number) => {
-    return [...Array(this.board?.size)]
+    return [...Array(this.board?.columns)]
       .map((item: any, column: number) => this.boardService.getEmptyCell(row, column));
   }
 
   private initBombs = (cellWithoutBomb?: BoardCell) => {
     let totalMines = this.board?.total_bombs || 0;
     while (totalMines > 0) {
-      let row = Math.floor(Math.random() * (this.board?.size || 0));
-      let column = Math.floor(Math.random() * (this.board?.size || 0));
+      let row = Math.floor(Math.random() * (this.board?.rows || 0));
+      let column = Math.floor(Math.random() * (this.board?.columns || 0));
 
       if (this.shouldPlaceBomb(row, column, cellWithoutBomb)) {
         this.cells[row][column].type = CellType.Bomb;
@@ -150,7 +162,7 @@ export class BoardComponent implements OnChanges {
     }
   }
 
-  private updateCellsValues = () => {
+  private updateCellsValues = (): void => {
     for (let row = 0; row < this.cells?.length; row++) {
       for (let column = 0; column < this.cells[row]?.length; column++) {
         const cell = this.cells[row][column];
@@ -184,5 +196,19 @@ export class BoardComponent implements OnChanges {
     const bombIndexIsEquelToFirstClickIndex = (row === cellWithoutBomb?.row && column === cellWithoutBomb.column);
     return this.cells[row][column].type !== CellType.Bomb
       && (!initAfterFirstClick || !bombIndexIsEquelToFirstClickIndex)
+  }
+
+  private showFailedBoard = (cell: BoardCell | undefined) => {
+    for (let row = 0; row < this.cells?.length; row++) {
+      for (let column = 0; column < this.cells[row]?.length; column++) {
+        const isCellIndex = !!cell && (row === cell?.row && column === cell.column);
+        if (!isCellIndex) {
+          this.cells[row][column].state = CellState.Discovered;
+        } else {
+          this.cells[row][column].error = true;
+        }
+
+      }
+    }
   }
 }

@@ -16,7 +16,7 @@
 .base-container {
   color: white;
   position: fixed;
-  height: calc(100% - $topBaHeight);
-  top: $topBaHeight;
+  height: 100%;// calc(100% - $topBaHeight);
+  top: 0; //$topBaHeight;
   left: 0;
 }

@@ -1,11 +1,15 @@
 .cell-contanier { 
     width: 35px;
     height: 35px;
-    border: 1px solid black;
+    border: 1px solid white;
     margin: 3px;
-    color: black;
+    color: white;
 
     &.empty-discovered-cell {
         background-color: rgb(241, 226, 205);
+    }
+
+    &.error {
+        border: 1px solid red;
     }
 }

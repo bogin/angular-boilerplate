@@ -4,9 +4,11 @@ import { Text } from "src/app/utils/text-class.utils";
 export const MinesPageConfigurations: MinesPage = {
     title: new Text('Mines', true),
     board: {
-        size: 6,
-        total_bombs: 7,
+        rows: 5,
+        columns: 4,
+        total_bombs: 5,
         markers: 0,
-        firstClick: true
+        firstClick: true,
+        active: true,
     }
 }

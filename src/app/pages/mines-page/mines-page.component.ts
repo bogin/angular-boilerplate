@@ -23,17 +23,16 @@ export class MinesPageComponent {
     this.initPage();
   }
 
-  initPage = () => {
+  initPage = (): void => {
     this.gameEnded = false;
     this.configurations = this.minesPageService.getConfiguraions();
-    this.board = undefined;
     this.board = cloneDeep(this.configurations.board);
   }
 
   notificationRecived = (notification: Notification) => {
     switch (notification.type) {
       case NotificationType.Done: {
-        this.finishGame(!!this.board?.lose);
+        this.finishGame();
         break;
       }
       case NotificationType.ItemRightClicked: {
@@ -51,7 +50,8 @@ export class MinesPageComponent {
     }
   }
 
-  private finishGame = (lose: boolean) => {
+  private finishGame = () => {
     this.gameEnded = true;
+    this.board!.active = false;
   }
 }

@@ -2,14 +2,15 @@
     (click)="click(cell, NotificationType.ItemClicked)" 
     (contextmenu)="click(cell, NotificationType.ItemRightClicked)"
     [ngClass]="{
-        'empty-discovered-cell': cell.state === CellState.Discovered && cell.type === CellType.Empty 
+        'empty-discovered-cell': cell.state === CellState.Discovered && cell.type === CellType.Empty,
+        'error': !!cell.error
     }">
     <ng-container [ngSwitch]="cell.state">
 
         <ng-container *ngSwitchCase="CellState.UnDiscovered"></ng-container>
 
         <ng-container *ngSwitchCase="CellState.Marked">
-            <i class="fa-solid fa-triangle-exclamation color-black f-s-18"></i>
+            <i class="fa-solid fa-triangle-exclamation color-white f-s-18"></i>
         </ng-container>
 
         <ng-container *ngSwitchCase="CellState.Discovered">

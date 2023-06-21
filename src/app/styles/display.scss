@@ -21,3 +21,15 @@
 .grow {
     flex: 1;
 }
+
+.overflow-scroll-x {
+    overflow-x: scroll !important;
+}
+
+.overflow-scroll-y {
+    overflow-y: scroll !important;
+}
+
+.overflow-hidden {
+    overflow: hidden !important;
+}

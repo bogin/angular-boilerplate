@@ -7,4 +7,5 @@ export interface BoardCell {
     state: CellState;
     type: CellType;
     value: number;
+    error?: boolean;
 }
