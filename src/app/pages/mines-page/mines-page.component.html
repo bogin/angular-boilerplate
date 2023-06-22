@@ -1,5 +1,5 @@
-<div class="mines-page-container background-black d-flex flex-column w-100 h-100">
-    <div class="w-100 h-25 d-flex justify-content-center color-white">
+<div class="background-black h-100 container">
+    <div class="d-flex justify-content-center color-white">
         <div>
             <span class="f-s-35"> {{ configurations.title.key }} </span>
             <span class="grow"></span>
@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div class="overflow-hidden h-75">
+    <div class="d-flex justify-content-center">
         <ng-container *ngIf="!!gameEnded">
             <div class="end-game-cover d-flex flex-column align-items-center" (click)="initPage()">
                 <span class="f-s-50 color-white"> {{ (!!board?.lose ? 'you lose' : ' you won') | uppercase }}</span>
@@ -15,9 +15,7 @@
                 <span class="f-s-20 color-white"> {{ 'click here to start a new game' | uppercase }} </span>
             </div>
         </ng-container>
-        <div class="h-100 w-100 d-flex align-items-center justify-content-center">
-            <app-board [board]="board" (notify)="notificationRecived($event)"
-                [ngClass]="{'game-ended': !!gameEnded}"></app-board>
-        </div>
+        <app-board [board]="board" (notify)="notificationRecived($event)"
+            [ngClass]="{'game-ended': !!gameEnded}"></app-board>
     </div>
 </div>

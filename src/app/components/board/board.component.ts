@@ -1,3 +1,4 @@
+
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { CellType } from 'src/app/models/enums/board-cell-type.enum';
 import { CellState } from 'src/app/models/enums/board-state-type.enum';
@@ -150,7 +151,11 @@ export class BoardComponent implements OnChanges {
   }
 
   private initBombs = (cellWithoutBomb?: BoardCell) => {
-    let totalMines = this.board?.total_bombs || 0;
+    let totalMines = this.board!.total_bombs;
+    if (totalMines > (this.board!.rows * this.board!.columns)) {
+      alert('You are using to many bombs');
+      return;
+    }
     while (totalMines > 0) {
       let row = Math.floor(Math.random() * (this.board?.rows || 0));
       let column = Math.floor(Math.random() * (this.board?.columns || 0));
