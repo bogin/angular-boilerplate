@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-export class UserActionsService {
+export class UserActionService {
 
     getConfiguraions = (config?: UserAction): UserAction | undefined => {
         if (!config) {

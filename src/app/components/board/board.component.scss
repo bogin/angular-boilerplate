@@ -1,12 +1,12 @@
-:host ::ng-deep .container {
+:host ::ng-deep .rows-container {
     display: grid;
-    grid-template-rows: repeat(var(--rows-count));
+    grid-template-rows: repeat(var(--rows_count));
     grid-row-gap: 0px;
     grid-row-gap: var(--cell_gap);
 
     max-height: 80vh;
     
-    width: var(--board-width);
+    width: var(--board_width);
     max-width: 80vw;
 
     overflow-x: auto;
@@ -14,7 +14,7 @@
 
     .row {
         display: grid;
-        grid-template-columns: repeat(var(--columns-count), 1fr);
+        grid-template-columns: repeat(var(--columns_count), 1fr);
         grid-column-gap: var(--cell_gap);
 
         .cell-contanier {

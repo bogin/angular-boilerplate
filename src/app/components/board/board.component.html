@@ -1,6 +1,11 @@
 <ng-container *ngIf="board">
-    <div class="container"
-        style="--rows-count: {{ board.rows }}; --cell_gap: {{ board.cell_gap }}px; --cell_size: {{ board.cell_size }}px; --columns-count: {{ board.columns }}; --board-width: {{ board.columns * (board.cell_size + (board.cell_gap * 3))}}px">
+    <div class="rows-container"
+        [style.--rows_count]="board.rows"
+        [style.--cell_gap]="board.cell_gap + 'px'"
+        [style.--cell_size]="board.cell_size + 'px'"
+        [style.--columns_count]="board.columns"
+        [style.--board_width]="board.columns * (board.cell_size + (board.cell_gap * 3)) + 'px'"
+    >
         <ng-container *ngFor="let row of cells">
             <div class="row">
                 <ng-container *ngFor="let cell of row">

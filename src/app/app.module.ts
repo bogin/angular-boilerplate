@@ -22,13 +22,14 @@ import { MinesPageComponent } from './pages/mines-page/mines-page.component';
 import { MinesBoardComponent } from './components/mines-board/mines-board.component';
 import { UserActionComponent } from './components/user-action/user-action.component';
 import { MinesCellComponent } from './components/mines-cell/mines-cell.component';
+import { BoardComponent } from './components/board/board.component';
+import { FormComponent } from './components/form/form.component';
+import { MinesAdminPageComponent } from './pages/mines-admin/mines-admin.component';
 
 
 
 //services
-import { UserActionsService as UserActionService } from './components/user-action/user-action.serivce';
-import { BoardComponent } from './components/board/board.component';
-import { FormComponent } from './components/form/form.component';
+import { UserActionService } from './components/user-action/user-action.serivce';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { FormComponent } from './components/form/form.component';
     MinesBoardComponent,
     MinesCellComponent,
     BoardComponent,
-    FormComponent
+    FormComponent,
+    MinesAdminPageComponent
   ],
   imports: [
     BrowserModule,
