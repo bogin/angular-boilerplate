@@ -18,7 +18,13 @@ export class MinesCellComponent {
   @Input() cell: BoardCell;
   @Output() notify = new EventEmitter<Notification>();
 
-  click = (cell: BoardCell, notificationType: NotificationType): boolean => {
+  click = (cell: BoardCell, notificationType: NotificationType): void => {
+    if (![CellState.Discovered, CellState.Marked].includes(cell.state)) {
+      this.notify.emit({ type: notificationType, data: this.cell });
+    }
+  }
+
+  rightClick = (cell: BoardCell, notificationType: NotificationType): boolean => {
     if (cell.state !== CellState.Discovered) {
       this.notify.emit({ type: notificationType, data: this.cell });
     }

@@ -1,6 +1,6 @@
 <div class="cell-contanier d-flex justify-content-center align-items-center"
     (click)="click(cell, NotificationType.ItemClicked)" 
-    (contextmenu)="click(cell, NotificationType.ItemRightClicked)"
+    (contextmenu)="rightClick(cell, NotificationType.ItemRightClicked)"
     [ngClass]="{
         'empty-discovered-cell': cell.state === CellState.Discovered && cell.type === CellType.Empty,
         'error': !!cell.error

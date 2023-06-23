@@ -22,13 +22,21 @@ export class BoardComponent implements OnChanges {
   constructor(private boardService: BoardService) { }
 
   ngOnChanges(): void {
-    this.initBoardCells();
+    if (!!this.board) {
+      let totalMines = this.board.total_bombs || 0;
+      if (totalMines > (this.board.rows * this.board!.columns)) {
+        alert('You are using to many bombs');
+      } else {
+        this.initBoardCells(); 
+      }
+    }
+    
   }
 
   initBoardCells = (cellWithoutBomb?: BoardCell) => {
-    this.initEmptyCells();
-    this.initBombs(cellWithoutBomb);
-    this.updateCellsValues();
+    this.cells = this.boardService.initEmptyCells(this.board!);
+    this.cells = this.boardService.initCellsWithBombs(this.board!, this.cells, cellWithoutBomb);
+    this.cells = this.boardService.initCellsWithValues(this.cells);
   }
 
   notificationRecived = (notification: Notification) => {
@@ -82,19 +90,13 @@ export class BoardComponent implements OnChanges {
   }
 
   private ifPlayerWonEndGame = (): void => {
-    for (let row = 0; row < this.cells?.length; row++) {
-      for (let column = 0; column < this.cells[row]?.length; column++) {
-        const cell = this.cells[row][column];
-        if (cell.state === CellState.UnDiscovered) {
-          return;
-        }
-      }
+    const isAllCellDiscovered = this.boardService.isAllCellDiscovered(this.cells);
+    if (isAllCellDiscovered) {
+      this.board!.lose = false;
+      setTimeout(() => {
+        this.finishGame();
+      });
     }
-
-    this.board!.lose = false;
-    setTimeout(() => {
-      this.finishGame();
-    });
   }
 
   private playerFailed = (cell: BoardCell): void => {
@@ -140,69 +142,6 @@ export class BoardComponent implements OnChanges {
     }
   }
 
-  private initEmptyCells = (): void => {
-    this.cells = [...Array(this.board?.rows)]
-      .map((item: any, row: number) => this.initEmptyBoardRow(row));
-  }
-
-  private initEmptyBoardRow = (row: number) => {
-    return [...Array(this.board?.columns)]
-      .map((item: any, column: number) => this.boardService.getEmptyCell(row, column));
-  }
-
-  private initBombs = (cellWithoutBomb?: BoardCell) => {
-    let totalMines = this.board!.total_bombs;
-    if (totalMines > (this.board!.rows * this.board!.columns)) {
-      alert('You are using to many bombs');
-      return;
-    }
-    while (totalMines > 0) {
-      let row = Math.floor(Math.random() * (this.board?.rows || 0));
-      let column = Math.floor(Math.random() * (this.board?.columns || 0));
-
-      if (this.shouldPlaceBomb(row, column, cellWithoutBomb)) {
-        this.cells[row][column].type = CellType.Bomb;
-        totalMines--;
-      }
-    }
-  }
-
-  private updateCellsValues = (): void => {
-    for (let row = 0; row < this.cells?.length; row++) {
-      for (let column = 0; column < this.cells[row]?.length; column++) {
-        const cell = this.cells[row][column];
-        if (cell.type !== CellType.Bomb) {
-          this.setNumberOfBombs(cell);
-          this.setCellTypeByValue(cell);
-        }
-      }
-    }
-  }
-
-  private setCellTypeByValue = (cell: BoardCell): void => {
-    cell.type = !cell.value ? CellType.Empty : CellType.Number;
-  }
-
-  private setNumberOfBombs = (cell: BoardCell): void => {
-    for (let row = cell.row - 1; row < cell.row + 2; row++) {
-      for (let column = cell.column - 1; column < cell.column + 2; column++) {
-        const isIndexesInRange = row > -1 && column > -1 && row < this.cells.length && column < this.cells[row].length;
-        if (isIndexesInRange) {
-          if (this.cells[row][column].type === CellType.Bomb) {
-            cell.value++;
-          }
-        }
-      }
-    }
-  }
-
-  private shouldPlaceBomb = (row: number, column: number, cellWithoutBomb?: BoardCell): boolean => {
-    const initAfterFirstClick = !!cellWithoutBomb;
-    const bombIndexIsEquelToFirstClickIndex = (row === cellWithoutBomb?.row && column === cellWithoutBomb.column);
-    return this.cells[row][column].type !== CellType.Bomb
-      && (!initAfterFirstClick || !bombIndexIsEquelToFirstClickIndex)
-  }
-
   private showFailedBoard = (cell: BoardCell | undefined) => {
     for (let row = 0; row < this.cells?.length; row++) {
       for (let column = 0; column < this.cells[row]?.length; column++) {
@@ -212,7 +151,6 @@ export class BoardComponent implements OnChanges {
         } else {
           this.cells[row][column].error = true;
         }
-
       }
     }
   }
