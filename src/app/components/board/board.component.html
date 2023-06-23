@@ -6,12 +6,14 @@
         [style.--columns_count]="board.columns"
         [style.--board_width]="board.columns * (board.cell_size + (board.cell_gap * 3)) + 'px'"
     >
-        <ng-container *ngFor="let row of cells">
-            <div class="row">
-                <ng-container *ngFor="let cell of row">
-                    <app-mines-cell (notify)="notificationRecived($event)" [cell]="cell"></app-mines-cell>
-                </ng-container>
-            </div>
+        <ng-container *ngIf="cells.cells as cells">
+            <ng-container *ngFor="let row of cells">
+                <div class="row">
+                    <ng-container *ngFor="let cell of row">
+                        <app-mines-cell (notify)="handleCellNotification($event)" [cell]="cell"></app-mines-cell>
+                    </ng-container>
+                </div>
+            </ng-container>
         </ng-container>
     </div>
 </ng-container>

@@ -4,9 +4,9 @@ import { CellType } from 'src/app/models/enums/board-cell-type.enum';
 import { CellState } from 'src/app/models/enums/board-state-type.enum';
 import { BoardCell } from 'src/app/models/interfaces/board-cell.model';
 import { Board } from 'src/app/models/interfaces/board.model';
-import { BoardService } from './board.serivce';
 import { Notification } from 'src/app/models/interfaces/notification.model';
 import { NotificationType } from 'src/app/models/enums/notification-type.enum';
+import { CellsArray } from 'src/app/classes/cells-array.class';
 
 @Component({
   selector: 'app-board',
@@ -17,80 +17,78 @@ export class BoardComponent implements OnChanges {
   @Input() board?: Board;
   @Output() notify = new EventEmitter<Notification>();
 
-  cells: BoardCell[][];
+  cells: CellsArray;
 
-  constructor(private boardService: BoardService) { }
+  constructor() { }
 
   ngOnChanges(): void {
     if (!!this.board) {
-      let totalMines = this.board.total_bombs || 0;
-      if (totalMines > (this.board.rows * this.board!.columns)) {
-        alert('You are using to many bombs');
-      } else {
-        this.initBoardCells(); 
-      }
+      this.cells = new CellsArray(this.board);
     }
-    
   }
 
-  initBoardCells = (cellWithoutBomb?: BoardCell) => {
-    this.cells = this.boardService.initEmptyCells(this.board!);
-    this.cells = this.boardService.initCellsWithBombs(this.board!, this.cells, cellWithoutBomb);
-    this.cells = this.boardService.initCellsWithValues(this.cells);
-  }
-
-  notificationRecived = (notification: Notification) => {
-    if (!this.board?.active || !!this.board?.lose) {
+  handleCellNotification = (notification: Notification) => {
+    if (!this.isBoardStateClickable()) {
       return;
     }
 
-    switch (notification.type) {
-      case NotificationType.ItemClicked: {
-        this.cellClicked(notification.data);
-        break;
-      }
-      case NotificationType.ItemRightClicked: {
-        this.toggleCellMarker(notification.data);
-        this.notify.emit(notification)
-        break;
-      }
-    }
+    this.handleCellClick(notification);
 
     if (this.board?.active && !this.board?.lose) {
       this.ifPlayerWonEndGame();
     }
   }
 
-  private moveBombFromCell = (cell: BoardCell): void => {
-    this.initBoardCells(cell);
-    this.cellClicked(this.cells[cell.row][cell.column]);
+  private handleCellClick = (notification: Notification) => {
+    const isFirstClick = !!this.board!.firstClick;
+    this.board!.firstClick = false;
+    let cell = notification.data;
+    if (isFirstClick) {
+      cell = this.moveBombFromCell(cell);
+    }
+
+    switch (notification.type) {
+      case NotificationType.ItemClicked: {
+        this.cellClicked(cell);
+        break;
+      }
+      case NotificationType.ItemRightClicked: {
+        this.handleCellRightClick(cell);
+        this.notify.emit({ type: notification.type, data: cell });
+        break;
+      }
+    }
+  }
+
+  private handleCellRightClick = (cell: BoardCell): void => {
+    this.cells.toggleCellMarker(cell.row, cell.column);
+  }
+
+  private moveBombFromCell = (cell: BoardCell): BoardCell => {
+    this.cells.initCells(cell);
+    return this.cells.getCell(cell.row, cell.column);
   }
 
   private cellClicked = (cell: BoardCell): void => {
-    const isFirstClick = !!this.board?.firstClick;
-    this.board!.firstClick = false;
+
     switch (cell.type) {
       case CellType.Bomb: {
-        if (isFirstClick) {
-          this.moveBombFromCell(cell);
-        } else {
-          this.playerFailed(cell)
-        }
+        this.playerFailed(cell)
         break;
       }
       case CellType.Empty: {
-        this.showEmptyCells(cell);
+        this.showEmptyAdjacentCells(cell);
         break;
       }
       case CellType.Number: {
-        this.showCellValue(cell);
+        this.cells.setState(cell.row, cell.column, CellState.Discovered);
         break;
       }
     }
   }
 
   private ifPlayerWonEndGame = (): void => {
-    const isAllCellDiscovered = this.boardService.isAllCellDiscovered(this.cells);
+    const isAllCellDiscovered = this.cells.isAllCellDiscovered();
     if (isAllCellDiscovered) {
       this.board!.lose = false;
       setTimeout(() => {
@@ -101,7 +99,7 @@ export class BoardComponent implements OnChanges {
 
   private playerFailed = (cell: BoardCell): void => {
     if (!!this.board) {
-      this.showCellValue(cell);
+      this.cells.setState(cell.row, cell.column, CellState.Discovered);
       this.board.lose = true;
       this.finishGame(cell);
     }
@@ -112,46 +110,38 @@ export class BoardComponent implements OnChanges {
     this.showFailedBoard(cell);
   }
 
-  private toggleCellMarker = (cell: BoardCell): void => {
-    const cellFromMemomry = this.cells[cell.row][cell.column];
-    cellFromMemomry.state === CellState.Marked ?
-      cellFromMemomry.state = CellState.UnDiscovered
-      : cellFromMemomry.state = CellState.Marked;
-  }
-
-  private showCellValue = (cell: BoardCell): void => {
-    const cellFromMemomry = this.cells[cell.row][cell.column];
-    cellFromMemomry.state = CellState.Discovered;
-  }
-
-  private showEmptyCells = (cell: BoardCell): void => {
+  private showEmptyAdjacentCells = (cell: BoardCell): void => {
     if (cell.type !== CellType.Empty || cell.state === CellState.Discovered) {
       if (cell.type === CellType.Number) {
-        cell.state = CellState.Discovered;
+        this.cells.setState(cell.row, cell.column, CellState.Discovered);
       }
       return;
     }
-    cell.state = CellState.Discovered;
+    this.cells.setState(cell.row, cell.column, CellState.Discovered);
     for (let row = cell.row - 1; row < cell.row + 2; row++) {
       for (let column = cell.column - 1; column < cell.column + 2; column++) {
-        const isIndexesInRange = row > -1 && column > -1 && row < this.cells.length && column < this.cells[row].length;
+        const isIndexesInRange = row > -1 && column > -1 && row < this.board!.rows && column < this.board!.columns;
         if (isIndexesInRange) {
-          this.showEmptyCells(this.cells[row][column]);
+          this.showEmptyAdjacentCells(this.cells.getCell(row, column));
         }
       }
     }
   }
 
   private showFailedBoard = (cell: BoardCell | undefined) => {
-    for (let row = 0; row < this.cells?.length; row++) {
-      for (let column = 0; column < this.cells[row]?.length; column++) {
+    for (let row = 0; row < this.board!.rows; row++) {
+      for (let column = 0; column < this.board!.columns; column++) {
         const isCellIndex = !!cell && (row === cell?.row && column === cell.column);
         if (!isCellIndex) {
-          this.cells[row][column].state = CellState.Discovered;
+          this.cells.setState(row, column, CellState.Discovered);
         } else {
-          this.cells[row][column].error = true;
+          this.cells.setError(row, column, true);
         }
       }
     }
+  }
+
+  private isBoardStateClickable = (): boolean => {
+    return !(!this.board?.active || !!this.board?.lose);
   }
 }

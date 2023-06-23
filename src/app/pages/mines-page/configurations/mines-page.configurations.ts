@@ -4,8 +4,8 @@ import { Text } from "src/app/utils/text-class.utils";
 export const MinesPageConfigurations: MinesPage = {
     title: new Text('Mines', true),
     board: {
-        rows: 2,
-        columns: 2,
+        rows: 12,
+        columns: 12,
         total_bombs: 1,
         cell_gap: 3,
         cell_size: 35,
