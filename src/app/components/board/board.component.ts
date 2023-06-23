@@ -44,7 +44,7 @@ export class BoardComponent implements OnChanges {
     this.board!.firstClick = false;
     let cell = notification.data;
     if (isFirstClick) {
-      cell = this.moveBombFromCell(cell);
+      cell = this.cells.moveBombFromCell(cell);
     }
 
     switch (notification.type) {
@@ -53,20 +53,15 @@ export class BoardComponent implements OnChanges {
         break;
       }
       case NotificationType.ItemRightClicked: {
-        this.handleCellRightClick(cell);
+        this.cellRightClick(cell);
         this.notify.emit({ type: notification.type, data: cell });
         break;
       }
     }
   }
 
-  private handleCellRightClick = (cell: BoardCell): void => {
+  private cellRightClick = (cell: BoardCell): void => {
     this.cells.toggleCellMarker(cell.row, cell.column);
-  }
-
-  private moveBombFromCell = (cell: BoardCell): BoardCell => {
-    this.cells.initCells(cell);
-    return this.cells.getCell(cell.row, cell.column);
   }
 
   private cellClicked = (cell: BoardCell): void => {
@@ -77,7 +72,7 @@ export class BoardComponent implements OnChanges {
         break;
       }
       case CellType.Empty: {
-        this.showEmptyAdjacentCells(cell);
+        this.cells.showEmptyAdjacentCells(cell);
         break;
       }
       case CellType.Number: {
@@ -107,38 +102,7 @@ export class BoardComponent implements OnChanges {
 
   private finishGame = (cell?: BoardCell): void => {
     this.notify.emit({ type: NotificationType.Done });
-    this.showFailedBoard(cell);
-  }
-
-  private showEmptyAdjacentCells = (cell: BoardCell): void => {
-    if (cell.type !== CellType.Empty || cell.state === CellState.Discovered) {
-      if (cell.type === CellType.Number) {
-        this.cells.setState(cell.row, cell.column, CellState.Discovered);
-      }
-      return;
-    }
-    this.cells.setState(cell.row, cell.column, CellState.Discovered);
-    for (let row = cell.row - 1; row < cell.row + 2; row++) {
-      for (let column = cell.column - 1; column < cell.column + 2; column++) {
-        const isIndexesInRange = row > -1 && column > -1 && row < this.board!.rows && column < this.board!.columns;
-        if (isIndexesInRange) {
-          this.showEmptyAdjacentCells(this.cells.getCell(row, column));
-        }
-      }
-    }
-  }
-
-  private showFailedBoard = (cell: BoardCell | undefined) => {
-    for (let row = 0; row < this.board!.rows; row++) {
-      for (let column = 0; column < this.board!.columns; column++) {
-        const isCellIndex = !!cell && (row === cell?.row && column === cell.column);
-        if (!isCellIndex) {
-          this.cells.setState(row, column, CellState.Discovered);
-        } else {
-          this.cells.setError(row, column, true);
-        }
-      }
-    }
+    this.cells.revealFailedBoard(cell);
   }
 
   private isBoardStateClickable = (): boolean => {

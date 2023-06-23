@@ -8,7 +8,7 @@ export class CellsArray {
     public get cells(): BoardCell[][] {
         return this._cells;
     }
-    
+
     board: Board;
 
     constructor(board: Board, cellWithoutBomb?: BoardCell) {
@@ -130,5 +130,41 @@ export class CellsArray {
 
     setError = (row: number, column: number, error: boolean): void => {
         this.cells[row][column].error = error;
+    }
+
+    moveBombFromCell = (cell: BoardCell): BoardCell => {
+        this.initCells(cell);
+        return this.getCell(cell.row, cell.column);
+    }
+
+    showEmptyAdjacentCells = (cell: BoardCell): void => {
+        if (cell.type !== CellType.Empty || cell.state === CellState.Discovered) {
+            if (cell.type === CellType.Number) {
+                this.setState(cell.row, cell.column, CellState.Discovered);
+            }
+            return;
+        }
+        this.setState(cell.row, cell.column, CellState.Discovered);
+        for (let row = cell.row - 1; row < cell.row + 2; row++) {
+            for (let column = cell.column - 1; column < cell.column + 2; column++) {
+                const isIndexesInRange = row > -1 && column > -1 && row < this.board!.rows && column < this.board!.columns;
+                if (isIndexesInRange) {
+                    this.showEmptyAdjacentCells(this.getCell(row, column));
+                }
+            }
+        }
+    }
+
+    revealFailedBoard = (cell: BoardCell | undefined) => {
+        for (let row = 0; row < this.board!.rows; row++) {
+            for (let column = 0; column < this.board!.columns; column++) {
+                const isCellIndex = !!cell && (row === cell?.row && column === cell.column);
+                if (!isCellIndex) {
+                    this.setState(row, column, CellState.Discovered);
+                } else {
+                    this.setError(row, column, true);
+                }
+            }
+        }
     }
 }
