@@ -1,0 +1,11 @@
+:host ::ng-deep .p-panelmenu {
+    background-color: #434343;
+    width: 300px;
+    height: 100vh;
+
+    .p-panelmenu-header {
+        a {
+            border-radius: unset !important;
+        }
+    }
+}

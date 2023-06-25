@@ -1,40 +1,31 @@
-<div class="h-25">
+<form [formGroup]="ngForm" (ngSubmit)="onSubmit()" class="form">
+    <h2>{{ form.title.key }}</h2>
+    <ng-container *ngFor="let control of form.controles">
+        <ng-container [ngSwitch]="control.type">
+            <div class="form-control">
+                <ng-container *ngSwitchCase="ControlType.Input">
+                    <ng-container [ngTemplateOutlet]="input"
+                        [ngTemplateOutletContext]="{$implicit: control}"></ng-container>
+                </ng-container>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-template #input let-control>
+        <label [for]="control.key"> {{ control.title.key }}</label>
+        <input [type]="!!control.input_type ? control.input_type : null" [id]="control.key"
+            [formControlName]="control.key" />
 
-    <!-- TODO MOVE FORM TO COMPONENT -->
-    <h2>Insert nomber of boardSize</h2>
-    <form [formGroup]="boardForm" (ngSubmit)="onSubmit()">
-
-        <!-- TODO: ng-contanier for form input of type number -->
-        <div>
-            <label for="boardSize">Number of rows & columns:</label>
-            <input type="number" id="boardSize" formControlName="boardSize" />
-            <ng-container *ngIf="boardForm?.controls as controls">
-                <div *ngIf="controls['boardSize']?.invalid && controls['boardSize']?.touched">
-                    <small *ngIf="controls['boardSize']?.errors?.required">Number of rows & columns is
-                        required.</small>
-                    <small *ngIf="controls.boardSize.errors?.notValidInteger">Number of rows & columns must be a
-                        number.</small>
-                    <small *ngIf="controls.boardSize.errors?.min">Number of rows & columns must be at least
-                        1.</small>
-                </div>
+        <div *ngIf="ngForm.controls[control.key]?.invalid && ngForm.controls[control.key]?.touched">
+            <ng-container *ngFor="let error of control.errors">
+                <ng-container *ngIf="ngForm.controls[control.key].errors as controlError">
+                    <ng-container *ngIf="controlError[error.key]">
+                        <small class="color-red"> {{ error.title.key }}</small>
+                    <br>
+                    </ng-container>
+                </ng-container>
             </ng-container>
         </div>
+    </ng-template>
 
-        <div>
-            <label for="totalBombs">Number of bombs:</label>
-            <input type="number" id="totalBombs" formControlName="totalBombs" />
-            <ng-container *ngIf="boardForm?.controls as controls">
-                <div *ngIf="controls['totalBombs']?.invalid && controls['totalBombs']?.touched">
-                    <small *ngIf="controls['totalBombs']?.errors?.required">Number of bombs is
-                        required.</small>
-                    <small *ngIf="controls.totalBombs.errors?.notValidInteger">Number of bombs must be a
-                        number.</small>
-                    <small *ngIf="controls.totalBombs.errors?.min">Number of bombs must be at least
-                        1.</small>
-                </div>
-            </ng-container>
-        </div>
-
-        <button type="submit" [disabled]="boardForm.invalid">Submit</button>
-    </form>
-</div>
+    <button type="submit" [disabled]="ngForm.invalid">Submit</button>
+</form>
