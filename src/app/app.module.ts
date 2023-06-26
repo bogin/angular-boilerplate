@@ -18,26 +18,17 @@ import { TooltipModule } from 'primeng/tooltip';
 
 // components
 import { HomePageComponent } from './components/home-page/home-page.component';
-import { MinesPageComponent } from './pages/mines-page/mines-page.component';
-import { MinesBoardComponent } from './components/mines-board/mines-board.component';
 import { UserActionComponent } from './components/user-action/user-action.component';
-import { MinesCellComponent } from './components/mines-cell/mines-cell.component';
-
 
 
 //services
-import { UserActionsService as UserActionService } from './components/user-action/user-action.serivce';
-import { BoardComponent } from './components/board/board.component';
+import { UserActionsService } from './components/user-action/user-action.serivce';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     UserActionComponent,
-    MinesPageComponent,
-    MinesBoardComponent,
-    MinesCellComponent,
-    BoardComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +37,7 @@ import { BoardComponent } from './components/board/board.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [UserActionService],
+  providers: [UserActionsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
