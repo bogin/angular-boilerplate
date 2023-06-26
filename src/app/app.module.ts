@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { appRoutes } from './routes/app-routes';
@@ -55,6 +55,7 @@ import { MinesConfigurationComponent } from './components/configurations-views/m
     SidebarModule,
     MenubarModule,
     PanelMenuModule,
+    HttpClientModule,
   ],
   providers: [UserActionService],
   bootstrap: [AppComponent]

@@ -24,7 +24,7 @@ export class CellsArray {
 
     initEmptyCells = (): void => {
         this._cells = [...Array(this.board.rows)]
-            .map((item: any, row: number) => this.initEmptyBoardRow(row, this.board.columns));
+            .map((item: any, row: number) => this.initEmptyBoardRow(row, this.board.columns!));
     }
 
     private initEmptyBoardRow = (row: number, columnSize: number) => {
@@ -44,13 +44,13 @@ export class CellsArray {
 
     initCellsWithBombs = (cellWithoutBomb?: BoardCell): void => {
         let totalMines = this.board.total_bombs;
-        while (totalMines > 0) {
+        while (totalMines! > 0) {
             let row = Math.floor(Math.random() * (this.board.rows || 0));
             let column = Math.floor(Math.random() * (this.board.columns || 0));
 
             if (this.shouldPlaceBomb(row, column, cellWithoutBomb)) {
                 this.cells[row][column].type = CellType.Bomb;
-                totalMines--;
+                totalMines!--;
             }
         }
     }
@@ -147,7 +147,7 @@ export class CellsArray {
         this.setState(cell.row, cell.column, CellState.Discovered);
         for (let row = cell.row - 1; row < cell.row + 2; row++) {
             for (let column = cell.column - 1; column < cell.column + 2; column++) {
-                const isIndexesInRange = row > -1 && column > -1 && row < this.board!.rows && column < this.board!.columns;
+                const isIndexesInRange = row > -1 && column > -1 && row < this.board!.rows! && column < this.board!.columns!;
                 if (isIndexesInRange) {
                     this.showEmptyAdjacentCells(this.getCell(row, column));
                 }
@@ -156,8 +156,8 @@ export class CellsArray {
     }
 
     revealFailedBoard = (cell: BoardCell | undefined) => {
-        for (let row = 0; row < this.board!.rows; row++) {
-            for (let column = 0; column < this.board!.columns; column++) {
+        for (let row = 0; row < this.board!.rows!; row++) {
+            for (let column = 0; column < this.board!.columns!; column++) {
                 const isCellIndex = !!cell && (row === cell?.row && column === cell.column);
                 if (!isCellIndex) {
                     this.setState(row, column, CellState.Discovered);

@@ -1,1 +1,3 @@
-<app-form class="color-black" [form]="configForm" (notify)="submit()"></app-form>
+<ng-container *ngIf="!!configForm">
+    <app-form class="color-black" [form]="configForm" (notify)="submit($event)"></app-form>
+</ng-container>

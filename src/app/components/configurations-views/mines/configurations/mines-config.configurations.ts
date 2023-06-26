@@ -27,7 +27,6 @@ export const MinesConfigConfigurations: Form = {
             ],
             key: 'rows',
             type: ControlType.Input,
-            // input_type: 'number'
         },
         {
             title: new Text('Number of columns: '),
@@ -49,7 +48,6 @@ export const MinesConfigConfigurations: Form = {
             ],
             key: 'columns',
             type: ControlType.Input,
-            // input_type: 'number'
         },
         {
             title: new Text('Number of bombs: '),
@@ -71,7 +69,44 @@ export const MinesConfigConfigurations: Form = {
             ],
             key: 'total_bombs',
             type: ControlType.Input,
-            // input_type: 'number'
+        },
+        {
+            title: new Text('Cells gap in px: '),
+            value: null,
+            validators: [Validators.required, Validators.min(1), validInteger()],
+            errors: [
+                {
+                    key: 'required',
+                    title: new Text('Cells gap in px is required.')
+                },
+                {
+                    key: 'notValidInteger',
+                    title: new Text('Cells gap  must be a number.')
+                }
+            ],
+            key: 'cells_gap',
+            type: ControlType.Input,
+        },
+        {
+            title: new Text('Cell size in px: '),
+            value: null,
+            validators: [Validators.required, Validators.min(1), validInteger()],
+            errors: [
+                {
+                    key: 'required',
+                    title: new Text('Cell size is required.')
+                },
+                {
+                    key: 'notValidInteger',
+                    title: new Text('Cell size must be a number.')
+                },
+                {
+                    key: 'min',
+                    title: new Text('Cell size must be at least 1.')
+                }
+            ],
+            key: 'cells_size',
+            type: ControlType.Input,
         }
     ]
 };

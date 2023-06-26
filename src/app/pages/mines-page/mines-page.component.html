@@ -1,21 +1,23 @@
 <div class="background-black h-100 container">
-    <div class="d-flex justify-content-center color-white">
-        <div>
-            <span class="f-s-35"> {{ configurations.title.key }} </span>
-            <span class="grow"></span>
-            <span class="f-s-15"> {{ board?.markers || 0 }} / {{ board?.total_bombs || 0 }}</span>
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-center">
-        <ng-container *ngIf="!!gameEnded">
-            <div class="end-game-cover d-flex flex-column align-items-center" (click)="initPage()">
-                <span class="f-s-50 color-white"> {{ (!!board?.lose ? 'you lose' : ' you won') | uppercase }}</span>
-                <br>
-                <span class="f-s-20 color-white"> {{ 'click here to start a new game' | uppercase }} </span>
+    <ng-container *ngIf="!!this.board">
+        <div class="d-flex justify-content-center color-white">
+            <div>
+                <span class="f-s-35"> {{ configurations.title.key }} </span>
+                <span class="grow"></span>
+                <span class="f-s-15"> {{ board.markers }} / {{ board.total_bombs }}</span>
             </div>
-        </ng-container>
-        <app-board [board]="board" (notify)="notificationRecived($event)"
-            [ngClass]="{'game-ended': !!gameEnded}"></app-board>
-    </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <ng-container *ngIf="!!gameEnded">
+                <div class="end-game-cover d-flex flex-column align-items-center" (click)="initPage()">
+                    <span class="f-s-50 color-white"> {{ (!!board.lose ? 'you lose' : ' you won') | uppercase }}</span>
+                    <br>
+                    <span class="f-s-20 color-white"> {{ 'click here to start a new game' | uppercase }} </span>
+                </div>
+            </ng-container>
+            <app-board [board]="board" (notify)="notificationRecived($event)"
+                [ngClass]="{'game-ended': !!gameEnded}"></app-board>
+        </div>
+    </ng-container>
 </div>

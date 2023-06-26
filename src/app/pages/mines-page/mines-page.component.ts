@@ -7,6 +7,7 @@ import { CellState } from 'src/app/models/enums/board-state-type.enum';
 import { cloneDeep } from 'lodash';
 import { MinesPageService } from './mines-page.serivce';
 import { MinesPage } from 'src/app/models/interfaces/mines-page-configurations.model';
+import { MinesConfigService } from 'src/app/components/configurations-views/mines/mines-config.serivce';
 
 @Component({
   selector: 'app-mines-page',
@@ -17,15 +18,32 @@ export class MinesPageComponent {
   board?: Board;
   gameEnded?: boolean;
   configurations: MinesPage;
-  constructor(private minesPageService: MinesPageService) {}
+
+  constructor(
+    private minesPageService: MinesPageService,
+    private minesConfigService: MinesConfigService
+  ) {}
 
   ngOnInit() {
-    this.initPage();
+    this.minesConfigService.getMinesConfiurations().subscribe((res: any) => {
+      if (!!res) {
+        this.initConfigurations(res);
+        this.initPage();
+      }
+    });
+  }
+
+  private initConfigurations = (res: any) => {
+    this.configurations = this.minesPageService.getConfiguraions();
+    const boardConfig = res.data;
+    boardConfig.markers = 0;
+    boardConfig.firstClick = true;
+    boardConfig.active = true;
+    this.configurations.board = boardConfig;
   }
 
   initPage = (): void => {
     this.gameEnded = false;
-    this.configurations = this.minesPageService.getConfiguraions();
     this.board = cloneDeep(this.configurations.board);
   }
 
