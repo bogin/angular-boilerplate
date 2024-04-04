@@ -9,16 +9,13 @@ export const appRoutes: Routes = [
     path: 'mines',
     component: MinesPageComponent
   },
-  // {
-  //   path: 'configurations',
-  //   component: ConfigurationsPageComponent,
-  //   pathMatch: 'full',
-  //   children: []
-  // },
   {
-    path: 'mines-configurations',
-    pathMatch: 'full',
-    component: MinesConfigurationComponent
+    path: 'configurations',
+    component: ConfigurationsPageComponent,
+    children: [{
+        path: 'mines-configurations',
+        component: MinesConfigurationComponent
+      }]
   },
   {
     path: '',

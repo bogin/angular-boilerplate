@@ -1,7 +1,7 @@
 @import '../app/styles/params.scss';
 
 .toolbar {
-  position: sticky;
+  position: absolute;
   top: 0;
   width: 100%;
   background-color: #3f51b5;
@@ -15,8 +15,9 @@
 
 .base-container {
   color: white;
-  position: fixed;
-  height: 100%;// calc(100% - $topBaHeight);
-  top: 0; //$topBaHeight;
+  height: calc(100vh - $topBaHeight);
+  top: $topBaHeight;
   left: 0;
+  position: absolute;
+  overflow: auto;
 }

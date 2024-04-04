@@ -2,7 +2,7 @@
     <ng-container *ngIf="!!this.board">
         <div class="d-flex justify-content-center color-white">
             <div>
-                <span class="f-s-35"> {{ configurations.title.key }} </span>
+                <span class="f-s-35"> {{ configurations.title.key | translate }} </span>
                 <span class="grow"></span>
                 <span class="f-s-15"> {{ board.markers }} / {{ board.total_bombs }}</span>
             </div>

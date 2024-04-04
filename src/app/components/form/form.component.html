@@ -1,5 +1,5 @@
 <form [formGroup]="ngForm" (ngSubmit)="onSubmit()" class="form">
-    <h2>{{ form.title.key }}</h2>
+    <h2>{{ form.title.key | translate }}</h2>
     <ng-container *ngFor="let control of form.controles">
         <ng-container [ngSwitch]="control.type">
             <div class="form-control">
@@ -11,7 +11,7 @@
         </ng-container>
     </ng-container>
     <ng-template #input let-control>
-        <label [for]="control.key"> {{ control.title.key }}</label>
+        <label [for]="control.key"> {{ control.title.key | translate }}</label>
         <input [type]="!!control.input_type ? control.input_type : null" [id]="control.key"
             [formControlName]="control.key" />
 
@@ -19,7 +19,7 @@
             <ng-container *ngFor="let error of control.errors">
                 <ng-container *ngIf="ngForm.controls[control.key].errors as controlError">
                     <ng-container *ngIf="controlError[error.key]">
-                        <small class="color-red"> {{ error.title.key }}</small>
+                        <small class="color-red"> {{ error.title.key | translate }}</small>
                     <br>
                     </ng-container>
                 </ng-container>
@@ -27,5 +27,5 @@
         </div>
     </ng-template>
 
-    <button class="cursor-pointer" type="submit" [disabled]="ngForm.invalid">Submit</button>
+    <button class="cursor-pointer" type="submit" [disabled]="ngForm.invalid">{{ 'submit' | translate }}</button>
 </form>

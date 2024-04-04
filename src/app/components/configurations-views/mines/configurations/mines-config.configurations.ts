@@ -5,108 +5,126 @@ import { Form } from "src/app/models/interfaces/form.model";
 import { Text } from "src/app/utils/text-class.utils";
 
 export const MinesConfigConfigurations: Form = {
-    title: new Text('Mines configurations'),
+    title: new Text('mines_configurations.page_title'),
     controles: [
         {
-            title: new Text('Number of rows: '),
+            title: new Text('mines_configurations.form.rows.text'),
             value: null,
             validators: [Validators.required, Validators.min(1), validInteger()],
             errors: [
                 {
                     key: 'required',
-                    title: new Text('Number of rows is required.')
+                    title: new Text('mines_configurations.form.rows.errors.required')
                 },
                 {
                     key: 'notValidInteger',
-                    title: new Text('Number of rows must be a number.')
+                    title: new Text('mines_configurations.form.rows.errors.number')
                 },
                 {
                     key: 'min',
-                    title: new Text('Number of rows must be at least 1.')
+                    title: new Text('mines_configurations.form.rows.errors.min')
                 }
             ],
             key: 'rows',
             type: ControlType.Input,
         },
         {
-            title: new Text('Number of columns: '),
+            title: new Text('mines_configurations.form.columns.text'),
             value: null,
             validators: [Validators.required, Validators.min(1), validInteger()],
             errors: [
                 {
                     key: 'required',
-                    title: new Text('Number of columns is required.')
+                    title: new Text('mines_configurations.form.columns.errors.required')
                 },
                 {
                     key: 'notValidInteger',
-                    title: new Text('Number of columns must be a number.')
+                    title: new Text('mines_configurations.form.columns.errors.number')
                 },
                 {
                     key: 'min',
-                    title: new Text('Number of columns must be at least 1.')
+                    title: new Text('mines_configurations.form.columns.errors.min')
                 }
             ],
             key: 'columns',
             type: ControlType.Input,
         },
         {
-            title: new Text('Number of bombs: '),
+            title: new Text('mines_configurations.form.total_bombs.text'),
             value: null,
             validators: [Validators.required, Validators.min(1), validInteger()],
             errors: [
                 {
                     key: 'required',
-                    title: new Text('Number of bombs is required.')
+                    title: new Text('mines_configurations.form.total_bombs.errors.required')
                 },
                 {
                     key: 'notValidInteger',
-                    title: new Text('Number of bombs must be a number.')
+                    title: new Text('mines_configurations.form.total_bombs.errors.number')
                 },
                 {
                     key: 'min',
-                    title: new Text('Number of bombs must be at least 1.')
+                    title: new Text('mines_configurations.form.total_bombs.errors.min')
                 }
             ],
             key: 'total_bombs',
             type: ControlType.Input,
         },
         {
-            title: new Text('Cells gap in px: '),
+            title: new Text('mines_configurations.form.cells_gap.text'),
             value: null,
             validators: [Validators.required, Validators.min(1), validInteger()],
             errors: [
                 {
                     key: 'required',
-                    title: new Text('Cells gap in px is required.')
+                    title: new Text('mines_configurations.form.cells_gap.errors.required')
                 },
                 {
                     key: 'notValidInteger',
-                    title: new Text('Cells gap  must be a number.')
+                    title: new Text('mines_configurations.form.cells_gap.errors.number')
                 }
             ],
             key: 'cells_gap',
             type: ControlType.Input,
         },
         {
-            title: new Text('Cell size in px: '),
+            title: new Text('mines_configurations.form.cells_size.text'),
             value: null,
             validators: [Validators.required, Validators.min(1), validInteger()],
             errors: [
                 {
                     key: 'required',
-                    title: new Text('Cell size is required.')
+                    title: new Text('mines_configurations.form.cells_size.errors.required')
                 },
                 {
                     key: 'notValidInteger',
-                    title: new Text('Cell size must be a number.')
+                    title: new Text('mines_configurations.form.cells_size.errors.number')
                 },
                 {
                     key: 'min',
-                    title: new Text('Cell size must be at least 1.')
+                    title: new Text('mines_configurations.form.cells_size.errors.number')
                 }
             ],
             key: 'cells_size',
             type: ControlType.Input,
         }
-    ]
+    ],
+    notification_messages: {
+        success: {
+            severity: "success",
+            summary: "Success",
+            detail: "Successfuly saved configuration",
+            sticky: false,
+            key: 'app-toast',
+            life: 2000,
+        },
+        failure: {
+            severity: 'failure',
+            summary: 'Failure',
+            detail: 'Failed to save configuration',
+            sticky: false,
+            key: 'app-toast',
+            life: 2000,
+        }
+    }
 };

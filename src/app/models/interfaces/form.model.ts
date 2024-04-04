@@ -1,9 +1,14 @@
 import { Text } from "src/app/utils/text-class.utils";
 import { ControlType } from "../enums/control-type.enum";
+import { Message } from "primeng/api";
 
 export interface Form {
     title: Text;
     controles: FormControl[]
+    notification_messages?: {
+        success?: Message;
+        failure?: Message;
+    }
 }
 
 export interface FormControl {

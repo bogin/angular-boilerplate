@@ -2,13 +2,8 @@ import { MinesPage } from "src/app/models/interfaces/mines-page-configurations.m
 import { Text } from "src/app/utils/text-class.utils";
 
 export const MinesPageConfigurations: MinesPage = {
-    title: new Text('Mines', true),
+    title: new Text('mines_page.title'),
     board: {
-        // rows: 12,
-        // columns: 12,
-        // total_bombs: 1,
-        // cells_gap: 3,
-        // cells_size: 35,
         markers: 0,
         firstClick: true,
         active: true

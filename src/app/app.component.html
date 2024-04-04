@@ -1,6 +1,11 @@
-<!-- <div class="toolbar">
-        <a class="button" routerLink="/mines">mines</a>
-    </div> -->
+<div class="toolbar">
+    <ng-container *ngFor="let item of topbar">
+        <a class="m-l-5" [class]="item.class" [routerLink]="item.routerLink">
+            {{ item.text.key | translate }}
+        </a>
+    </ng-container>
+</div>
 <div fxLayout class="base-container w-100">
+    <p-toast key="app-toast"></p-toast>
     <router-outlet></router-outlet>
 </div>

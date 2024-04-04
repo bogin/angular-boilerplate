@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { validInteger } from 'src/app/form-validaors/integer.validator';
-import { ControlType } from 'src/app/models/enums/control-type.enum';
 import { Form, FormControl } from 'src/app/models/interfaces/form.model';
 import { MinesConfigService } from './mines-config.serivce';
 import { Notification } from 'src/app/models/interfaces/notification.model';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-mines-config',
@@ -15,7 +13,10 @@ export class MinesConfigurationComponent {
 
   configForm: Form;
 
-  constructor(private minesConfigService: MinesConfigService) { }
+  constructor(
+    private messageService: MessageService,
+    private minesConfigService: MinesConfigService,
+  ) { }
 
   ngOnInit() {
     this.minesConfigService.getMinesConfiurations().subscribe((res: any) => {
@@ -24,29 +25,23 @@ export class MinesConfigurationComponent {
         this.setFormValues(res.data);
       }
     });
-    
+
   }
 
   submit = (notification: Notification) => {
     const controls = notification.data.controls;
     const newConfigurations = {} as any;
     Object.keys(controls).forEach((controlKey: string) => {
-      newConfigurations[controlKey] = controls[controlKey].value;
+      newConfigurations[controlKey] = Number(controls[controlKey].value);
     });
     this.minesConfigService.saveConfigurations(newConfigurations).subscribe((res: any) => {
-      this.setFormValues(notification.data);
+      if (!!res?.success) {
+        this.messageService.add(this.configForm.notification_messages?.success!);
+        this.setFormValues(notification.data);
+      } else {
+        this.messageService.add(this.configForm.notification_messages?.failure!);
+      }
     });
-    /* TODO 
-          1. SAVE RESALTS TO SERVER.
-          2. CHANGE CONFIG FOR MINES.
-          3. IN MINES - GET CONFIG FROM SERVER
-          4. IN MINERS GET TOTAL WIN/LOSS 
-          5. ADD SCORE BOARD (PRIMENG/CHETGPT)
-          6. ADD CLOCK TO MINES
-          7. Maybe change the css for the real game 
-    
-    
-    */
   }
 
   private setFormValues = (baseConfig: any) => {
