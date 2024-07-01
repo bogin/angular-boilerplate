@@ -22,6 +22,11 @@
     flex: 1;
 }
 
+.grow-width {
+    flex-grow: 1 1 auto;
+    
+}
+
 .overflow-scroll-x {
     overflow-x: scroll !important;
 }

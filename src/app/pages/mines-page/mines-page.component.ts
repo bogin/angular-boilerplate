@@ -12,7 +12,7 @@ import { MinesConfigService } from 'src/app/components/configurations-views/mine
 @Component({
   selector: 'app-mines-page',
   templateUrl: './mines-page.component.html',
-  styleUrls: ['./mines-page.component.scss']
+  styleUrls: ['./mines-page.component.scss'],
 })
 export class MinesPageComponent {
   board?: Board;
@@ -25,27 +25,29 @@ export class MinesPageComponent {
   ) {}
 
   ngOnInit() {
-    this.minesConfigService.getMinesConfiurations().subscribe((res: any) => {
-      if (!!res) {
-        this.initConfigurations(res);
-        this.initPage();
-      }
-    });
+    this.minesConfigService
+      .getMinesConfiurations()
+      .subscribe((res: unknown) => {
+        if (res) {
+          this.initConfigurations(res as { data: Board });
+          this.initPage();
+        }
+      });
   }
 
-  private initConfigurations = (res: any) => {
+  private initConfigurations = (res: { data: Board }) => {
     this.configurations = this.minesPageService.getConfiguraions();
     const boardConfig = res.data;
     boardConfig.markers = 0;
     boardConfig.firstClick = true;
     boardConfig.active = true;
     this.configurations.board = boardConfig;
-  }
+  };
 
   initPage = (): void => {
     this.gameEnded = false;
     this.board = cloneDeep(this.configurations.board);
-  }
+  };
 
   notificationRecived = (notification: Notification) => {
     switch (notification.type) {
@@ -58,18 +60,18 @@ export class MinesPageComponent {
         break;
       }
     }
-  }
+  };
 
   private updateMarkerCounter = (cell: BoardCell): void => {
     if (cell.state === CellState.Marked) {
-      this.board!.markers++; 
+      this.board!.markers++;
     } else {
-      this.board!.markers--; 
+      this.board!.markers--;
     }
-  }
+  };
 
   private finishGame = () => {
     this.gameEnded = true;
     this.board!.active = false;
-  }
+  };
 }

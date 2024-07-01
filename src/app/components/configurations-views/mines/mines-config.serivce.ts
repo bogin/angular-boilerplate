@@ -5,21 +5,20 @@ import { MinesConfigConfigurations } from './configurations/mines-config.configu
 import { MinesManager } from 'src/app/manageres/mines.manager';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class MinesConfigService {
-    
-    constructor(private minesManager: MinesManager) { }
+  constructor(private minesManager: MinesManager) {}
 
-    getConfiguraions = (): Form => {
-        return cloneDeep(MinesConfigConfigurations);
-    }
+  getConfiguraions = (): Form => {
+    return cloneDeep(MinesConfigConfigurations);
+  };
 
-    getMinesConfiurations = () => {
-        return this.minesManager.getMainsConfig();
-    }
+  getMinesConfiurations = () => {
+    return this.minesManager.getMainsConfig();
+  };
 
-    saveConfigurations = (data: any) => {
-        return this.minesManager.saveConfigurations(data);
-    }
+  saveConfigurations = (data: { [key: string]: number }) => {
+    return this.minesManager.saveConfigurations(data);
+  };
 }

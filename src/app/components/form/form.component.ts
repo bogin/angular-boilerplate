@@ -20,7 +20,7 @@ export class FormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    const group = {} as any;
+    const group = {} as { [key: string]: unknown[] };
     this.form.controles.forEach((control: FormControl) => {
       group[control.key] = [control.value, control.validators];
     });

@@ -7,7 +7,7 @@ export const Config = {
     topbar: [
         {
             class: 'button',
-            routerLink: '/mines',
+            routerLink: '/',
             text: new Text('mines')
         },
         {

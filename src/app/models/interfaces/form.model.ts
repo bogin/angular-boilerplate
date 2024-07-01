@@ -13,8 +13,8 @@ export interface Form {
 
 export interface FormControl {
     title: Text;
-    value: any;
-    validators: any[];
+    value: unknown;
+    validators: unknown[];
     errors: { key: string; title: Text }[];
     key: string;
     type: ControlType;

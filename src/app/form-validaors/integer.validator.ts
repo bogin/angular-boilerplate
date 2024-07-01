@@ -1,7 +1,7 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export function validInteger(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
+  return (control: AbstractControl): { [key: string]: unknown } | null => {
     const value = Number(control.value);
 
     if (Number.isInteger(value)) {

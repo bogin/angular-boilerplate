@@ -6,10 +6,6 @@ import { MinesConfigurationComponent } from '../components/configurations-views/
 
 export const appRoutes: Routes = [
   {
-    path: 'mines',
-    component: MinesPageComponent
-  },
-  {
     path: 'configurations',
     component: ConfigurationsPageComponent,
     children: [{
