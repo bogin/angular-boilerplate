@@ -9,6 +9,8 @@ On the home page, you can find the Mines game, and in the top bar, there is a li
 Please configure the game, appearance, and language as you prefer.
 
 
+## Run the application:
+
 
 # Frontend
 
@@ -20,7 +22,17 @@ Navigate to `http://localhost:4200/configurations/mines-configurations` and chan
 Then, please use the top bar to navigate to the game.
 
 
+# Backend:
 
+Open a new terminal, and run `cd backend`, then `npm install`, and finally `npm run start` to start the node server. 
+The application will automatically reload if you change any of the source files.
+Changes to configuration won't be saved if any changes applied.
+
+*This is a basic "Hello World" boilerplate I have for interviews.
+For this assignment, I just added a router, controller, and service for the Mines game,
+all of them pointing to a JSON file that is saved in memory.
+
+# Documentation:
 
 ## Components:
 
@@ -123,14 +135,3 @@ Responsible for loading the data, merging it with the UI configurations, and pas
 
 
 Responsible for loading the data, merging it with the UI configurations, and passing it to the children.
-
-
-# Backend system:
-
-OPen a new terminal, and run `cd backend`, then `npm install`, and finally `npm run start` to start the node server. 
-The application will automatically reload if you change any of the source files.
-Changes to configuration won't be saved if any changes applied.
-
-This is a basic "Hello World" boilerplate I have for interviews.
-For this assignment, I just added a router, controller, and service for the Mines game,
-all of them pointing to a JSON file that is saved in memory.
