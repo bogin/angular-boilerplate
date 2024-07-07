@@ -11,7 +11,8 @@ export class MinesConfigService {
   constructor(private minesManager: MinesManager) {}
 
   getConfiguraions = (): Form => {
-    return cloneDeep(MinesConfigConfigurations);
+    const config = cloneDeep(MinesConfigConfigurations);
+    return config;
   };
 
   getMinesConfiurations = () => {

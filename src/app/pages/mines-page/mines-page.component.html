@@ -1,42 +1,35 @@
-<div
-  class="background-white h-100 w-100 flex-column align-items-center justify-content-center d-flex"
->
-  <span class="f-s-35 color-black">
-    {{ configurations.title.key | translate }}
-  </span>
-  <div class="background-black grow">
-    <ng-container *ngIf="!!this.board">
-      <div class="d-flex grow-width justify-content-center color-white">
-        <div>
-          <span class="grow"></span>
-          <span class="f-s-15">
-            {{ board.markers }} / {{ board.total_bombs }}</span
-          >
-        </div>
+<div class="background-black h-100 container">
+  <ng-container *ngIf="!!this.board">
+    <div class="d-flex justify-content-center color-white">
+      <div>
+        <span class="f-s-35"> {{ configurations.title.key | translate }} </span>
+        <span class="grow"></span>
+        <span class="f-s-15">
+          {{ board.markers }} / {{ board.total_bombs }}</span
+        >
       </div>
+    </div>
 
-      <div class="d-flex justify-content-center">
-        <ng-container *ngIf="!!gameEnded">
-          <div
-            class="end-game-cover d-flex flex-column align-items-center"
-            (click)="initPage()"
+    <div class="d-flex justify-content-center">
+      <ng-container *ngIf="!!gameEnded">
+        <div
+          class="end-game-cover d-flex flex-column align-items-center"
+          (click)="initPage()"
+        >
+          <span class="f-s-50 color-white">
+            {{ (!!board.lose ? ("you_lose" | translate ): ("you_won" | translate)) | uppercase }}</span
           >
-            <span class="f-s-50 color-white">
-              {{ (!!board.lose ? "you lose" : " you won") | uppercase }}</span
-            >
-            <br />
-            <span class="f-s-20 color-white">
-              {{ "click here to start a new game" | uppercase }}
-            </span>
-          </div>
-        </ng-container>
-        <app-board
-          [board]="board"
-          (notify)="notificationRecived($event)"
-          [ngClass]="{ 'game-ended': !!gameEnded }"
-        ></app-board>
-      </div>
-    </ng-container>
-  </div>
-  <div class="grow"></div>
+          <br />
+          <span class="f-s-20 color-white">
+            {{ 'click_to_restart' | translate | uppercase }}
+          </span>
+        </div>
+      </ng-container>
+      <app-board
+        [board]="board"
+        (notify)="notificationRecived($event)"
+        [ngClass]="{ 'game-ended': !!gameEnded }"
+      ></app-board>
+    </div>
+  </ng-container>
 </div>

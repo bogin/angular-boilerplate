@@ -2,7 +2,7 @@ import { Text } from "../utils/text-class.utils";
 
 export const Config = {
     base_url: 'http://localhost:3000',
-    default_language: 'en',
+    default_language: 'he',
     app_title: 'shachar - boilerpalte',
     topbar: [
         {

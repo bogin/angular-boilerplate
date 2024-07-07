@@ -18,5 +18,9 @@ export interface FormControl {
     errors: { key: string; title: Text }[];
     key: string;
     type: ControlType;
+
+    optionLabel?: string;
+    optionValue?: string;
+    options?: { key: string; value: string; selected?: boolean }[];
     input_type?: string;
 }

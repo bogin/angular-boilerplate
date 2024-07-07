@@ -3,6 +3,7 @@ import { Form, FormControl } from 'src/app/models/interfaces/form.model';
 import { MinesConfigService } from './mines-config.serivce';
 import { Notification } from 'src/app/models/interfaces/notification.model';
 import { MessageService } from 'primeng/api';
+import { ControlType } from 'src/app/models/enums/control-type.enum';
 
 @Component({
   selector: 'app-mines-config',
@@ -32,9 +33,27 @@ export class MinesConfigurationComponent {
 
   submit = (notification: Notification) => {
     const controls = notification.data.controls;
-    const newConfigurations = {} as { [key: string]: number };
+    const newConfigurations = {} as { [key: string]: any };
     Object.keys(controls).forEach((controlKey: string) => {
-      newConfigurations[controlKey] = Number(controls[controlKey].value);
+      const control = this.configForm.controles.find(
+        (fContol: FormControl) => fContol.key === controlKey
+      );
+      switch (control?.type) {
+        case ControlType.Input: {
+          newConfigurations[controlKey] = Number(control.value);
+          break;
+        }
+        case ControlType.Select: {
+          const options = control.options?.map((option: any) => {
+            return {
+              ...option,
+              selected: option.value === controls[controlKey].value?.value,
+            };
+          });
+          newConfigurations[controlKey] = options;
+          break;
+        }
+      }
     });
     this.minesConfigService
       .saveConfigurations(newConfigurations)
@@ -43,7 +62,9 @@ export class MinesConfigurationComponent {
           this.messageService.add(
             this.configForm.notification_messages?.success!
           );
-          this.setFormValues(notification.data);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         } else {
           this.messageService.add(
             this.configForm.notification_messages?.failure!
@@ -52,13 +73,25 @@ export class MinesConfigurationComponent {
       });
   };
 
-  private setFormValues = (baseConfig: { [key: string]: number }) => {
+  private setFormValues = (baseConfig: { [key: string]: any }) => {
     Object.keys(baseConfig).forEach((key: string) => {
       const control = this.configForm.controles.find(
         (fContol: FormControl) => fContol.key === key
       );
       if (control) {
-        control.value = baseConfig[key];
+        switch (control.type) {
+          case ControlType.Input: {
+            control.value = baseConfig[key];
+            break;
+          }
+          case ControlType.Select: {
+            control.options = baseConfig[key];
+            control.value = baseConfig[key]?.find(
+              (option: { selected: boolean }) => option.selected
+            );
+            break;
+          }
+        }
       }
     });
   };

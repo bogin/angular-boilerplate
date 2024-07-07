@@ -107,7 +107,22 @@ export const MinesConfigConfigurations: Form = {
             ],
             key: 'cells_size',
             type: ControlType.Input,
-        }
+        },
+        {
+            title: new Text('mines_configurations.form.language.text'),
+            value: null,
+            validators: [Validators.required],
+            errors: [
+                {
+                    key: 'required',
+                    title: new Text('mines_configurations.form.language.errors.required')
+                },
+            ],
+            key: 'languages',
+            optionLabel: 'label',
+            optionValue: 'value',
+            type: ControlType.Select,
+        },
     ],
     notification_messages: {
         success: {

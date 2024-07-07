@@ -22,6 +22,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
+import { DropdownModule } from 'primeng/dropdown';
 
 //services
 import { UserActionService } from './components/user-action/user-action.serivce';
@@ -32,13 +33,14 @@ import { MinesConfigurationComponent } from './components/configurations-views/m
 // components
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { MinesPageComponent } from './pages/mines-page/mines-page.component';
-import { MinesBoardComponent } from './components/mines-board/mines-board.component';
+
 import { UserActionComponent } from './components/user-action/user-action.component';
 import { MinesCellComponent } from './components/mines-cell/mines-cell.component';
 import { BoardComponent } from './components/board/board.component';
 import { FormComponent } from './components/form/form.component';
 import { MessageService } from 'primeng/api';
 
+//pipes
 
 @NgModule({
   declarations: [
@@ -46,12 +48,11 @@ import { MessageService } from 'primeng/api';
     HomePageComponent,
     UserActionComponent,
     MinesPageComponent,
-    MinesBoardComponent,
     MinesCellComponent,
     BoardComponent,
     FormComponent,
     ConfigurationsPageComponent,
-    MinesConfigurationComponent
+    MinesConfigurationComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +68,7 @@ import { MessageService } from 'primeng/api';
     ToastModule,
     HttpClientModule,
     MessagesModule,
+    DropdownModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -74,6 +76,7 @@ import { MessageService } from 'primeng/api';
         deps: [HttpClient]
       }
     })
+
   ],
   providers: [UserActionService, MessageService],
   bootstrap: [AppComponent]
