@@ -9,10 +9,10 @@ On the home page, you can find the Mines game, and in the top bar, there is a li
 Please configure the game, appearance, and language as you prefer.
 
 
-## Run the application:
+# Run the application:
 
 
-# Frontend
+## Frontend
 
 Run `cd frontend`, then `npm install` and finally `npm run start` for starting the angular app. 
 The application will automatically reload if you change any of the source files.
@@ -22,7 +22,7 @@ Navigate to `http://localhost:4200/configurations/mines-configurations` and chan
 Then, please use the top bar to navigate to the game.
 
 
-# Backend:
+## Backend:
 
 Open a new terminal, and run `cd backend`, then `npm install`, and finally `npm run start` to start the node server. 
 The application will automatically reload if you change any of the source files.
