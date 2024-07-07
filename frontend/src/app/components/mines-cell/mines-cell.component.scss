@@ -1,0 +1,27 @@
+.cell-container-dark { 
+    border: 1px solid white;
+    margin: 3px;
+    color: white;
+
+    &.empty-discovered-cell {
+        background-color: rgb(241, 226, 205);
+    }
+
+    &.error {
+        border: 1px solid red;
+    }
+}
+
+.cell-container-light {
+    border: 1px solid black;
+    margin: 3px;
+    color: black;
+    background-color: rgb(177, 182, 188);
+    &.empty-discovered-cell {
+        background-color: rgb(59, 50, 25);
+    }
+
+    &.error {
+        border: 1px solid red;
+    }
+}

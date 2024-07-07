@@ -1,0 +1,23 @@
+@import '../app/styles/params.scss';
+
+.toolbar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: #3f51b5;
+  color: #fff;
+  display: flex;
+  padding: 0 16px;
+  align-items: center;
+  height: $topBaHeight;
+  font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
+}
+
+.base-container {
+  color: white;
+  height: calc(100vh - $topBaHeight);
+  top: $topBaHeight;
+  left: 0;
+  position: absolute;
+  overflow: auto;
+}

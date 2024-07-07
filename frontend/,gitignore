@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/*
+
+# TypeScript compiled files
+dist/
+*.tsbuildinfo
+
+# Environment files
+.env
+
+# Editor directories and files
+.vscode/
+*.code-workspace

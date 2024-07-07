@@ -1,0 +1,22 @@
+@import '../../styles/params.scss';
+.board-container {
+  width: min-content;
+  height: min-content;
+}
+app-board {
+  position: relative;
+
+  &.game-ended {
+    filter: blur(2px);
+  }
+}
+
+.end-game-cover {
+  position: absolute;
+  z-index: 10;
+  top: 420px;
+  font-weight: bold;
+  border: 9px solid;
+  padding: 5px;
+  border-radius: 5px;
+}

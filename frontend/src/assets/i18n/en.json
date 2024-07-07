@@ -1,0 +1,77 @@
+{
+    "chrome_tab": "shachar - boilerplate",
+    "get": "Get",
+    "configurations": "Configurations",
+    "mines": "Mines",
+    "submit": "Submit",
+    "mines_page": {
+        "title": "Mines"
+    },
+    "mines_configurations": {
+        "page_title": "Mines",
+        "form": {
+            "language": {
+                "text": "Language: ",
+                "errors": {
+                    "required": "Language is required."
+                }
+            },
+            "theme": {
+                "text": "Theme: ",
+                "errors": {
+                    "required": "Theme is required."
+                }
+            },
+            "rows": {
+                "text": "Number of rows: ",
+                "errors": {
+                    "required": "Number of rows is required.",
+                    "number": "Number of rows must be a number.",
+                    "min": "Number of rows must be at least 1."
+                }
+            },
+            "columns": {
+                "text": "Number of columns: ",
+                "errors": {
+                    "required": "Number of columns is required.",
+                    "number": "Number of columns must be a number.",
+                    "min": "Number of columns must be at least 1."
+                }
+            },
+            "total_bombs": {
+                "text": "Number of bombs: ",
+                "errors": {
+                    "required": "Number of bombs is required.",
+                    "number": "Number of bombs must be a number.",
+                    "min": "Number of bombs must be at least 1."
+                }
+            },
+            "cells_gap": {
+                "text": "Cells gap in px: ",
+                "errors": {
+                    "required": "Cells gap in px is required.",
+                    "number": "Cells gap must be a number."
+                }
+            },
+            "cells_size": {
+                "text": "Cells size in px: ",
+                "errors": {
+                    "required": "Cells size in px is required.",
+                    "number": "Cells size must be a number.",
+                    "min": "Cell size must be at least 1."
+                }
+            }
+        }
+    },
+    "you_lose": " You lose!",
+    "you_won": " You won!",
+    "click_to_restart": "Click here to start a new game.",
+    "languages": {
+        "he": "Hebrew",
+        "en": "English"
+    },
+    "theme": {
+        "light": "Light",
+        "dark": "Dark"
+    }
+}

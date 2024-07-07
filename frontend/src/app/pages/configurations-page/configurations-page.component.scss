@@ -1,0 +1,16 @@
+@import '../../styles/params.scss';
+
+:host ::ng-deep .configurations-page-container {
+    height: calc(100vh - $topBaHeight);
+
+    .p-panelmenu {
+        background-color: #434343;
+        width: 20vw;
+        height: 100vh;
+        .p-panelmenu-header {
+            a {
+                border-radius: unset !important;
+            }
+        }
+    }
+}
