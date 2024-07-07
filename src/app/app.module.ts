@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // translate
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpLoaderFactory } from './factories/http-loader.factory';
+import { TranslateHttpLoaderFactory } from './factories/translate-http-loader.factory';
 
 
 // main 
@@ -25,7 +25,6 @@ import { MessagesModule } from 'primeng/messages';
 import { DropdownModule } from 'primeng/dropdown';
 
 //services
-import { UserActionService } from './components/user-action/user-action.serivce';
 import { ConfigurationsPageComponent } from './pages/configurations-page/configurations-page.component';
 import { MinesConfigurationComponent } from './components/configurations-views/mines/mines-config.component';
 
@@ -34,7 +33,6 @@ import { MinesConfigurationComponent } from './components/configurations-views/m
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { MinesPageComponent } from './pages/mines-page/mines-page.component';
 
-import { UserActionComponent } from './components/user-action/user-action.component';
 import { MinesCellComponent } from './components/mines-cell/mines-cell.component';
 import { BoardComponent } from './components/board/board.component';
 import { FormComponent } from './components/form/form.component';
@@ -46,7 +44,6 @@ import { MessageService } from 'primeng/api';
   declarations: [
     AppComponent,
     HomePageComponent,
-    UserActionComponent,
     MinesPageComponent,
     MinesCellComponent,
     BoardComponent,
@@ -72,13 +69,13 @@ import { MessageService } from 'primeng/api';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useFactory: TranslateHttpLoaderFactory,
         deps: [HttpClient]
       }
     })
 
   ],
-  providers: [UserActionService, MessageService],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

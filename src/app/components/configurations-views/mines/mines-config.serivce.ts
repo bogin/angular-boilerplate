@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash';
 import { Injectable } from '@angular/core';
 import { Form } from 'src/app/models/interfaces/form.model';
 import { MinesConfigConfigurations } from './configurations/mines-config.configurations';
-import { MinesManager } from 'src/app/manageres/mines.manager';
+import { MinesManager } from 'src/app/managers/mines.manager';
 
 @Injectable({
   providedIn: 'root',

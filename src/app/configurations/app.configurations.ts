@@ -12,7 +12,7 @@ export const Config = {
         },
         {
             class: 'button',
-            routerLink: '/configurations',
+            routerLink: '/configurations/mines-configurations',
             text: new Text('configurations')
         }
     ]

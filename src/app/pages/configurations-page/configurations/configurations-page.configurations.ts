@@ -4,6 +4,7 @@ export const ConfigurationsPage = {
             label: 'Mines',
             routerLink: 'mines-configurations',
             icon: 'fa-solid fa-screwdriver-wrench',
+            active: true
         }
     ]
 };
