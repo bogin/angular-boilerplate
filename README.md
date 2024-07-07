@@ -1,25 +1,23 @@
-## About
+# About
 
-This is my Angular boilerplate.
-It contains frontend & backend folders - the focus here is on the angular (for now) where I have implemented concepts that I favor.
+This is my Angular boilerplate. It contains frontend and backend folders - the focus here is on Angular (for now), where I have implemented concepts that I favor.
 
-This app began as a homework assignment for Wix. The objective was to write
-the Mines game. I decided to take it a step further.
+This app began as a homework assignment for Wix. The objective was to write the Mines game. I decided to take it a step further and allow the user to control the game parameters and appearance.
 
-On the home page, you can find the Mines game,
-and in the top bar, you can see a link to the configuration page.
+On the home page, you can find the Mines game, and in the top bar, there is a link to the configuration page.
 
-Please configure the game, appearance, and language as you like.
+Please configure the game, appearance, and language as you prefer.
 
 
 
-## Development server
+# Frontend
 
-Run `npm install` and `npm run start` for a development server. Navigate to `http://localhost:4200/configurations/mines-configurations` and change any configuration you like.
+Run `cd frontend`, then `npm install` and finally `npm run start` for starting the angular app. 
+The application will automatically reload if you change any of the source files.
+
+Navigate to `http://localhost:4200/configurations/mines-configurations` and change any configuration you like.
 
 Then, please use the top bar to navigate to the game.
-
-The application will automatically reload if you change any of the source files.
 
 
 
@@ -125,3 +123,14 @@ Responsible for loading the data, merging it with the UI configurations, and pas
 
 
 Responsible for loading the data, merging it with the UI configurations, and passing it to the children.
+
+
+# Backend system:
+
+OPen a new terminal, and run `cd backend`, then `npm install`, and finally `npm run start` to start the node server. 
+The application will automatically reload if you change any of the source files.
+Changes to configuration won't be saved if any changes applied.
+
+This is a basic "Hello World" boilerplate I have for interviews.
+For this assignment, I just added a router, controller, and service for the Mines game,
+all of them pointing to a JSON file that is saved in memory.

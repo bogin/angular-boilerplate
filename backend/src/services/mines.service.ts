@@ -8,7 +8,6 @@ export class MinesService {
         total_bombs: 25,
         cells_gap: 3,
         cells_size: 35,
-        default_language: 'en',
         languages: [{
             value: 'en',
             label: 'english',
@@ -24,6 +23,7 @@ export class MinesService {
         }, {
             value: 'dark',
             label: 'dark',
+            selected: true,
         }]
     } as any;
 

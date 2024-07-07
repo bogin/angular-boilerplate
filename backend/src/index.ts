@@ -16,7 +16,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 const port = process.env.DEV_PORT || 3000;
-// TODO set a file with variables for each env that is loaded by the npm run start comment with flaggesy
 
 
 app.listen(port, () => {
