@@ -1,5 +1,6 @@
 export interface Board {
     rows?: number;
+    board_theme?: string;
     columns?: number;
     total_bombs?: number;
     markers: number;
@@ -8,4 +9,5 @@ export interface Board {
     cells_gap?: number;
     lose?: boolean;
     active?: boolean;
+    theme?: { selected: boolean; value: string }[];
 }

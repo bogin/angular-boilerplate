@@ -16,6 +16,7 @@ export class MinesCellComponent {
   readonly CellType = CellType;
 
   @Input() cell: BoardCell;
+  @Input() theme?: string;
   @Output() notify = new EventEmitter<Notification>();
 
   click = (cell: BoardCell, notificationType: NotificationType): void => {

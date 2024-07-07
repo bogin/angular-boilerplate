@@ -17,10 +17,10 @@
         grid-template-columns: repeat(var(--columns_count), 1fr);
         grid-column-gap: var(--cells_gap);
 
-        .cell-contanier {
+        .cell-container-dark,
+        .cell-container-light {
             width: var(--cells_size);
-            height: var(--cells_size);
-            
+            height: var(--cells_size);   
         }
     }
 }

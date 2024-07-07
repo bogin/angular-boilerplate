@@ -16,6 +16,12 @@
                     "required": "Language is required."
                 }
             },
+            "theme": {
+                "text": "Theme: ",
+                "errors": {
+                    "required": "Theme is required."
+                }
+            },
             "rows": {
                 "text": "Number of rows: ",
                 "errors": {
@@ -63,5 +69,9 @@
     "languages": {
         "he": "Hebrew",
         "en": "English"
+    },
+    "theme": {
+        "light": "Light",
+        "dark": "Dark"
     }
 }

@@ -1,6 +1,6 @@
 import { Validators } from "@angular/forms";
 import { validInteger } from "src/app/form-validaors/integer.validator";
-import { ControlType } from "src/app/models/enums/control-type.enum";
+import { ControlInputType, ControlType } from "src/app/models/enums/control-type.enum";
 import { Form } from "src/app/models/interfaces/form.model";
 import { Text } from "src/app/utils/text-class.utils";
 
@@ -10,6 +10,7 @@ export const MinesConfigConfigurations: Form = {
         {
             title: new Text('mines_configurations.form.rows.text'),
             value: null,
+            input_type: ControlInputType.Number,
             validators: [Validators.required, Validators.min(1), validInteger()],
             errors: [
                 {
@@ -31,6 +32,7 @@ export const MinesConfigConfigurations: Form = {
         {
             title: new Text('mines_configurations.form.columns.text'),
             value: null,
+            input_type: ControlInputType.Number,
             validators: [Validators.required, Validators.min(1), validInteger()],
             errors: [
                 {
@@ -52,6 +54,7 @@ export const MinesConfigConfigurations: Form = {
         {
             title: new Text('mines_configurations.form.total_bombs.text'),
             value: null,
+            input_type: ControlInputType.Number,
             validators: [Validators.required, Validators.min(1), validInteger()],
             errors: [
                 {
@@ -73,6 +76,7 @@ export const MinesConfigConfigurations: Form = {
         {
             title: new Text('mines_configurations.form.cells_gap.text'),
             value: null,
+            input_type: ControlInputType.Number,
             validators: [Validators.required, Validators.min(1), validInteger()],
             errors: [
                 {
@@ -90,6 +94,7 @@ export const MinesConfigConfigurations: Form = {
         {
             title: new Text('mines_configurations.form.cells_size.text'),
             value: null,
+            input_type: ControlInputType.Number,
             validators: [Validators.required, Validators.min(1), validInteger()],
             errors: [
                 {
@@ -107,6 +112,22 @@ export const MinesConfigConfigurations: Form = {
             ],
             key: 'cells_size',
             type: ControlType.Input,
+        },
+        
+        {
+            title: new Text('mines_configurations.form.theme.text'),
+            value: null,
+            validators: [Validators.required],
+            errors: [
+                {
+                    key: 'required',
+                    title: new Text('mines_configurations.form.theme.errors.required')
+                },
+            ],
+            key: 'theme',
+            optionLabel: 'label',
+            optionValue: 'value',
+            type: ControlType.Select,
         },
         {
             title: new Text('mines_configurations.form.language.text'),

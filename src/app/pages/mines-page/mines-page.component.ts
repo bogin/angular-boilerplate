@@ -42,6 +42,7 @@ export class MinesPageComponent {
     boardConfig.firstClick = true;
     boardConfig.active = true;
     this.configurations.board = boardConfig;
+    boardConfig.board_theme = boardConfig.theme?.find((option: { selected: boolean; value: string }) => option.selected)?.value;
   };
 
   initPage = (): void => {
