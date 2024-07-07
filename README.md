@@ -32,7 +32,7 @@ Changes to configuration won't be saved if any changes applied.
 For this assignment, I just added a router, controller, and service for the Mines game,
 all of them pointing to a JSON file that is saved in memory.
 
-# Documentation:
+# Angular App Documentation:
 
 ## Components:
 
